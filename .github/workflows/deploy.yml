@@ -19,7 +19,7 @@ env:
 
 jobs:
   deploy-dev:
-    # if: github.event_name == 'push' && startsWith(github.ref,'ref/head/develop')
+    if: github.event_name == 'push' && startsWith(github.ref,'ref/head/develop')
     runs-on: ubuntu-latest
 
     steps:
