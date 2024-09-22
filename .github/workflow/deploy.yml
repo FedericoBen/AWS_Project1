@@ -1,0 +1,88 @@
+name: Deploy AWS SAM Application
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+env:
+  AWS_REGION: us-east-1 # Cambia esto si usas otra región
+  S3_BUCKET: S3project1 # Definir como secreto en GitHub
+  STACK_NAME: project1 # Definir como secreto en GitHub
+  SAM_TEMPLATE: template.yml
+  PIPELINE_EXECUTION_ROLE: PIPELINE_EXECUTION_ROLE
+
+jobs:
+  deploy-dev:
+    if: github.event_name == 'push' && startsWith(github.ref,'ref/head/develop')
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      # Step 2: Configurar SAM
+      - name: Setup SAM
+        uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+      
+      #Step 3: hacer el build de SAM a ClodFormation
+      - run: sam build --template ${SAM_TEMPLATE} --use-container
+
+      - name: Assume the testing pipeline user role
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ secret.PIPELINE_USER_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secret.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ env.PIPELINE_EXECUTION_ROLE }}
+          role-session-name: feature-deployment
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
+      #todo continuar con el template
+      # Step 4: Package Lambda code into a zip file
+      - name: Package Lambda
+        run: |
+          zip -r lambdaUsers.zip src/
+
+      # Step 5: Set up AWS CLI
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # Step 6: Upload Lambda package to S3
+      - name: Upload Lambda package to S3
+        run: |
+          aws s3 cp lambdaUsers.zip s3://${{ env.S3_BUCKET }}/lambdaUsers.zip
+
+      # Step 7: Package SAM template
+      - name: Package SAM Template
+        run: |
+          aws cloudformation package \
+            --template-file template.yml \
+            --s3-bucket ${{ env.S3_BUCKET }} \
+            --output-template-file packaged-template.yml
+
+      # Step 8: Deploy SAM stack
+      - name: Deploy SAM Application
+        run: |
+          aws cloudformation deploy \
+            --template-file packaged-template.yml \
+            --stack-name ${{ env.STACK_NAME }} \
+            --capabilities CAPABILITY_IAM \
+            --parameter-overrides AppEnv=dev LambdaCodeKey=lambdaUsers.zip
+
+      # Step 9: Verify the deployment
+      - name: Verify deployment
+        run: |
+          aws cloudformation describe-stacks --stack-name ${{ env.STACK_NAME }}

@@ -1,0 +1,101 @@
+Transform: AWS::Serverless-2016-10-31
+Parameters:
+  AppEnv:
+    Description: Este parametro es implementado para definir el ambiente que se va utilizar
+    Type: String
+    Default: dev
+  LambdaCodeKey:
+    Description: Este parametro es implementado para definir el nombre del objeto
+      donde se encuentra al codigo de la funcion lambda
+    Type: String
+    Default: lambdaUsersZip
+Resources:
+  apiProject1:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub
+        - ${ResourceName} ${AppEnv} From Stack ${AWS::StackName}
+        - ResourceName: apiProject1
+      StageName: !Sub ${AppEnv}
+      DefinitionBody:
+        openapi: '3.0'
+        info: {}
+        paths:
+          /users:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaUsers.Arn}/invocations
+              responses: {}
+      EndpointConfiguration: REGIONAL
+      TracingEnabled: true
+  lambdaUsers:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName} ${AppEnv}
+        - ResourceName: lambdaUsers
+      CodeUri: !Sub s3://${LambdaCodeBucket}/${LambdaCodeKey}
+      Handler: index.handler
+      Runtime: nodejs20.x
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          USERS_TABLE_NAME: !Ref Users
+          USERS_TABLE_ARN: !GetAtt Users.Arn
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref Users
+      Events:
+        apiProject1GETusers:
+          Type: Api
+          Properties:
+            Path: /users
+            Method: GET
+            RestApiId: !Ref apiProject1
+  lambdaUsersLogGroup:
+    Type: AWS::Logs::LogGroup
+    DeletionPolicy: Retain
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${lambdaUsers}
+  Users:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+  # Bucket S3 para almacenar el código de la Lambda
+  LambdaCodeBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub ${AWS::StackName}-lambda-code-${AWS::AccountId}
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+
+  # Política del Bucket S3 para la Lambda
+  LambdaCodeBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref LambdaCodeBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: DenyUnencryptedUploads
+            Effect: Deny
+            Principal: '*'
+            Action: s3:PutObject
+            Resource: !Sub arn:aws:s3:::${LambdaCodeBucket}/*
+            Condition:
+              StringNotEquals:
+                s3:x-amz-server-side-encryption: aws:kms
