@@ -29,7 +29,7 @@ jobs:
 
       # Step 2: Configurar SAM
       - name: Setup SAM
-        uses: aws-actions/setup-sam@v3
+        uses: aws-actions/setup-sam@v2
         with:
           use-installer: true
 
@@ -37,7 +37,7 @@ jobs:
       - run: sam build --template ${SAM_TEMPLATE} --use-container
 
       - name: Assume the testing pipeline user role
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.PIPELINE_USER_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.PIPELINE_USER_SECRET_ACCESS_KEY }}
