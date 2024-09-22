@@ -26,13 +26,13 @@ jobs:
       # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       # Step 2: Configurar SAM
       - name: Setup SAM
         uses: aws-actions/setup-sam@v2
         with:
           use-installer: true
-      
+
       #Step 3: hacer el build de SAM a ClodFormation
       - run: sam build --template ${SAM_TEMPLATE} --use-container
 
