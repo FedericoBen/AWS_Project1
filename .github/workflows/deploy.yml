@@ -15,7 +15,7 @@ env:
   S3_BUCKET: S3project1 # Definir como secreto en GitHub
   STACK_NAME: project1 # Definir como secreto en GitHub
   SAM_TEMPLATE: template.yml
-  PIPELINE_EXECUTION_ROLE: PIPELINE_EXECUTION_ROLE
+  PIPELINE_EXECUTION_ROLE: ${{ secrets.PIPELINE_EXECUTION_ROLE }}
 
 jobs:
   deploy-dev:
