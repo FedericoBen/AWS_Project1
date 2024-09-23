@@ -32,7 +32,7 @@ Resources:
       TracingEnabled: true
   lambdaUsers:
     Type: AWS::Serverless::Function
-    DependsOn: !Ref LambdaCodeBucket
+    DependsOn: LambdaCodeBucket
     Properties:
       Description: !Sub
         - Stack ${AWS::StackName} Function ${ResourceName} ${AppEnv}
