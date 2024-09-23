@@ -51,7 +51,7 @@ Resources:
                 body: JSON.stringify('¡Función Lambda ejecutada!'),
             };
         };
-      Handler: src.index.handler
+      Handler: src/index.handler
       Runtime: nodejs20.x
       MemorySize: 3008
       Timeout: 30
