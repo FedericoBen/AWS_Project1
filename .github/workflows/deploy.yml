@@ -12,7 +12,7 @@ on:
 
 env:
   AWS_REGION: us-east-1 # Cambia esto si usas otra región
-  S3_BUCKET: S3project1 # Definir como secreto en GitHub
+  S3_BUCKET: s3project1 # Definir como secreto en GitHub
   STACK_NAME: project1 # Definir como secreto en GitHub
   SAM_TEMPLATE: template.yml
   PIPELINE_EXECUTION_ROLE: arn:aws:iam::532353884571:role/PIPELINE_EXECUTION_ROLE
