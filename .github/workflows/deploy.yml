@@ -71,9 +71,9 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       # Step 6: Upload Lambda package to S3
-      - name: STEP6-Upload Lambda package to S3
-        run: |
-          aws s3 cp lambdaUsers.zip s3://${{ env.S3_BUCKET }}/lambdaUsers.zip
+      # - name: STEP6-Upload Lambda package to S3
+      #   run: |
+      #     aws s3 cp lambdaUsers.zip s3://${{ env.S3_BUCKET }}/lambdaUsers.zip
 
       # Step 7: Package SAM template
       # - name: STEP7-Package SAM Template
