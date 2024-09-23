@@ -50,9 +50,11 @@ jobs:
           role-duration-seconds: 3600
           role-skip-session-tagging: true
 
-      - name: Create S3 Bucket
+      # Step 5: Crear el bucket S3 si no existe
+      - name: STEP4-Create S3 Bucket
         run: |
-          aws s3api create-bucket --bucket ${{ env.S3_BUCKET }} --region ${{ env.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ env.AWS_REGION }} || echo "Bucket already exists"
+          aws s3api create-bucket --bucket ${{ env.S3_BUCKET }} --region ${{ env.AWS_REGION }} ${ { env.AWS_REGION } == 'us-east-1' && echo 'Bucket created'|| echo "Bucket already exists"
+
 
       # Step 4: Package Lambda code into a zip file
       - name: STEP4-Package Lambda
