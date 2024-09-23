@@ -86,15 +86,10 @@ jobs:
       # Step 8: Deploy SAM stack
       - name: STEP8-Deploy SAM Application
         run: |
-          sam deploy --stack-name ${TESTING_STACK_NAME} \
+          sam deploy --stack-name ${STACK_NAME} \
             --template packaged-testing.yaml \
             --capabilities CAPABILITY_IAM \
-            --region ${TESTING_REGION} \
-            --s3-bucket ${TESTING_ARTIFACTS_BUCKET} \
+            --region ${AWS_REGION} \
+            --s3-bucket ${S3_BUCKET} \
             --no-fail-on-empty-changeset \
-            --role-arn ${TESTING_CLOUDFORMATION_EXECUTION_ROLE}
-
-      # Step 9: Verify the deployment
-      - name: STEP9-Verify deployment
-        run: |
-          aws cloudformation describe-stacks --stack-name ${{ env.STACK_NAME }}
+            --role-arn ${PIPELINE_EXECUTION_ROLE}
