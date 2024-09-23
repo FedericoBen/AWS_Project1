@@ -90,6 +90,6 @@ jobs:
             --template template.yml \
             --capabilities CAPABILITY_IAM \
             --region ${AWS_REGION} \
-            --s3-bucket ${S3_BUCKET} \
+            --s3-bucket project-1-aws-fede-128937 \
             --no-fail-on-empty-changeset \
             --role-arn ${PIPELINE_EXECUTION_ROLE}
