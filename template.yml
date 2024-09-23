@@ -37,10 +37,10 @@ Resources:
       Description: !Sub
         - Stack ${AWS::StackName} Function ${ResourceName} ${AppEnv}
         - ResourceName: lambdaUsers
-      # CodeUri: !Sub s3://${LambdaCodeBucket}/${LambdaCodeKey}
-      CodeUri:
-        Bucket: !Ref LambdaCodeBucket
-        Key: !Sub ${LambdaCodeKey}
+      CodeUri: !Sub s3://${LambdaCodeBucket}
+      # CodeUri:
+      #   Bucket: !Ref LambdaCodeBucket
+      #   Key: !Sub ${LambdaCodeKey}
       Handler: index.handler
       Runtime: nodejs20.x
       MemorySize: 3008
