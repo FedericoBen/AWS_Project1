@@ -38,10 +38,10 @@ Resources:
       Description: !Sub
         - Stack ${AWS::StackName} Function ${ResourceName} ${AppEnv}
         - ResourceName: lambdaUsers
-      CodeUri: !Sub s3://${LambdaCodeBucket}
-      # CodeUri:
-      #   Bucket: !Ref LambdaCodeBucket
-      #   Key: !Sub ${LambdaCodeBucket}
+      # CodeUri: !Sub s3://${LambdaCodeBucket}
+      CodeUri:
+        Bucket: !Ref LambdaCodeBucket
+        Key: index.js
       Handler: index.handler
       Runtime: nodejs20.x
       MemorySize: 3008
@@ -88,20 +88,20 @@ Resources:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: aws:kms
 
-  # LambdaCodeObject:
-  # Type: AWS::S3::Object
-  # Properties:
-  #   Bucket: !Ref LambdaCodeBucket
-  #   Key: index.js
-  #   Content: |
-  #     // Este es un archivo JavaScript de ejemplo
-  #     exports.handler = async (event) => {
-  #         console.log('Hola desde Lambda!');
-  #         return {
-  #             statusCode: 200,
-  #             body: JSON.stringify('¡Función Lambda ejecutada!'),
-  #         };
-  #     };
+  LambdaCodeObject:
+  Type: AWS::S3::Object
+  Properties:
+    Bucket: !Ref LambdaCodeBucket
+    Key: index.js
+    Content: |
+      // Este es un archivo JavaScript de ejemplo
+      exports.handler = async (event) => {
+          console.log('Hola desde Lambda!');
+          return {
+              statusCode: 200,
+              body: JSON.stringify('¡Función Lambda ejecutada!'),
+          };
+      };
   # Política del Bucket S3 para la Lambda
   LambdaCodeBucketPolicy:
     Type: AWS::S3::BucketPolicy
