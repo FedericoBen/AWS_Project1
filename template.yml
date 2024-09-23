@@ -48,11 +48,11 @@ Resources:
       Tracing: Active
       Environment:
         Variables:
-          USERS_TABLE_NAME: !Ref Users
-          USERS_TABLE_ARN: !GetAtt Users.Arn
+          USERS_TABLE_NAME: !Ref UsersDynamo
+          USERS_TABLE_ARN: !GetAtt UsersDynamo.Arn
       Policies:
         - DynamoDBCrudPolicy:
-            TableName: !Ref Users
+            TableName: !Ref UsersDynamo
       Events:
         apiProject1GETusers:
           Type: Api
@@ -65,7 +65,7 @@ Resources:
     DeletionPolicy: Retain
     Properties:
       LogGroupName: !Sub /aws/lambda/${lambdaUsers}
-  Users:
+  UsersDynamo:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
