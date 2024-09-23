@@ -56,12 +56,17 @@ jobs:
           zip -r lambdaUsers.zip placeholder.txt
 
       # # Step 5: STEP5-Set up AWS CLI
-      # - name: Configure AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@v3
-      #   with:
-      #     aws-access-key-id: ${{ secrets.PIPELINE_USER_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.PIPELINE_USER_SECRET_ACCESS_KEY }}
-      #     aws-region: ${{ env.AWS_REGION }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.PIPELINE_USER_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+          
+      # Step 6: Upload Lambda package to S3
+      - name: STEP6-Upload Lambda package to S3
+        run: |
+          aws s3 cp lambdaUsers.zip s3://${{ env.S3_BUCKET }}/lambdaUsers.zip
 
       # Step 7: Package SAM template
       - name: STEP7-Package SAM Template
@@ -79,11 +84,6 @@ jobs:
             --stack-name ${{ env.STACK_NAME }} \
             --capabilities CAPABILITY_IAM \
             --parameter-overrides AppEnv=dev LambdaCodeKey=lambdaUsers.zip
-
-      # Step 6: Upload Lambda package to S3
-      - name: STEP6-Upload Lambda package to S3
-        run: |
-          aws s3 cp lambdaUsers.zip s3://${{ env.S3_BUCKET }}/lambdaUsers.zip
 
       # Step 9: Verify the deployment
       - name: STEP9-Verify deployment
