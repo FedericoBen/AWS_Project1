@@ -51,9 +51,9 @@ jobs:
           role-skip-session-tagging: true
 
       # Step 5: Crear el bucket S3 si no existe
-      - name: STEP4-Create S3 Bucket
-        run: |
-          aws s3api create-bucket --bucket ${{ env.S3_BUCKET }} --region ${{ env.AWS_REGION }} || echo "Bucket already exists"
+      # - name: STEP5-Create S3 Bucket
+      #   run: |
+      #     aws s3api create-bucket --bucket ${{ env.S3_BUCKET }} --region ${{ env.AWS_REGION }} || echo "Bucket already exists"
 
 
       # Step 4: Package Lambda code into a zip file
@@ -76,12 +76,12 @@ jobs:
           aws s3 cp lambdaUsers.zip s3://${{ env.S3_BUCKET }}/lambdaUsers.zip
 
       # Step 7: Package SAM template
-      - name: STEP7-Package SAM Template
-        run: |
-          aws cloudformation package \
-            --template-file template.yml \
-            --s3-bucket ${{ env.S3_BUCKET }} \
-            --output-template-file packaged-template.yml
+      # - name: STEP7-Package SAM Template
+      #   run: |
+      #     aws cloudformation package \
+      #       --template-file template.yml \
+      #       --s3-bucket ${{ env.S3_BUCKET }} \
+      #       --output-template-file packaged-template.yml
 
       # Step 8: Deploy SAM stack
       - name: STEP8-Deploy SAM Application
