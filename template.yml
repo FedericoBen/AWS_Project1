@@ -17,9 +17,9 @@ Resources:
         - ${ResourceName} ${AppEnv} From Stack ${AWS::StackName}
         - ResourceName: apiProject1
       StageName: !Sub ${AppEnv}
-      Cors:
-        AllowMethods: "'PUT, GET'"
-        AllowOrigin: "'http://localhost:5173'"
+      # Cors:
+      #   AllowMethods: "'PUT, GET'"
+      #   AllowOrigin: "'http://localhost:5173'"
         # MaxAge: "'600'"
         # AllowCredentials: true
       DefinitionBody:
