@@ -19,7 +19,6 @@ Resources:
       StageName: !Sub ${AppEnv}
       Cors:
         AllowMethods: "'PUT'"
-        AllowHeaders: "'X-Forwarded-For'"
         AllowOrigin: "'http://localhost:5173'"
         MaxAge: "'600'"
       DefinitionBody:
