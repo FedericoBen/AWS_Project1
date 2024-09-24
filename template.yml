@@ -5,8 +5,7 @@ Parameters:
     Type: String
     Default: dev
   LambdaCodeKey:
-    Description:
-      Este parametro es implementado para definir el nombre del objeto
+    Description: Este parametro es implementado para definir el nombre del objeto
       donde se encuentra al codigo de la funcion lambda
     Type: String
     Default: lambdaUsersZip
@@ -19,7 +18,7 @@ Resources:
         - ResourceName: apiProject1
       StageName: !Sub ${AppEnv}
       DefinitionBody:
-        openapi: "3.0"
+        openapi: '3.0'
         info: {}
         paths:
           /users:
@@ -76,6 +75,12 @@ Resources:
             Path: /users
             Method: GET
             RestApiId: !Ref apiProject1
+        apiProject1PUTusers:
+          Type: Api
+          Properties:
+            Path: /users
+            Method: PUT
+            RestApiId: !Ref apiProject1
   lambdaUsersLogGroup:
     Type: AWS::Logs::LogGroup
     DeletionPolicy: Retain
@@ -109,11 +114,11 @@ Resources:
     Properties:
       Bucket: !Ref LambdaCodeBucket
       PolicyDocument:
-        Version: "2012-10-17"
+        Version: '2012-10-17'
         Statement:
           - Sid: DenyUnencryptedUploads
             Effect: Deny
-            Principal: "*"
+            Principal: '*'
             Action: s3:PutObject
             Resource: !Sub arn:aws:s3:::${LambdaCodeBucket}/*
             Condition:
