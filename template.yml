@@ -5,7 +5,8 @@ Parameters:
     Type: String
     Default: dev
   LambdaCodeKey:
-    Description: Este parametro es implementado para definir el nombre del objeto
+    Description:
+      Este parametro es implementado para definir el nombre del objeto
       donde se encuentra al codigo de la funcion lambda
     Type: String
     Default: lambdaUsersZip
@@ -17,13 +18,14 @@ Resources:
         - ${ResourceName} ${AppEnv} From Stack ${AWS::StackName}
         - ResourceName: apiProject1
       StageName: !Sub ${AppEnv}
-      # Cors:
-      #   AllowMethods: "'PUT, GET'"
-      #   AllowOrigin: "'http://localhost:5173'"
-        # MaxAge: "'600'"
-        # AllowCredentials: true
+      Cors:
+        AllowMethods: "'PUT'"
+        AllowHeaders: "'Content-Type'"
+        AllowOrigin: "'http://localhost:5173'"
+        MaxAge: "'600'"
+        AllowCredentials: true
       DefinitionBody:
-        openapi: '3.0'
+        openapi: "3.0"
         info: {}
         paths:
           /users:
@@ -115,11 +117,11 @@ Resources:
     Properties:
       Bucket: !Ref LambdaCodeBucket
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Sid: DenyUnencryptedUploads
             Effect: Deny
-            Principal: '*'
+            Principal: "*"
             Action: s3:PutObject
             Resource: !Sub arn:aws:s3:::${LambdaCodeBucket}/*
             Condition:
