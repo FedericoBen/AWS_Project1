@@ -34,13 +34,52 @@ Resources:
                 httpMethod: POST
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaUsers.Arn}/invocations
-              responses: {}
+              responses:
+                "200":
+                  description: Successful response
+                  headers:
+                    Access-Control-Allow-Origin:
+                      schema:
+                        type: string
+                      default: "*"
+                    Access-Control-Allow-Methods:
+                      schema:
+                        type: string
+                      default: "GET, POST, PUT, DELETE, OPTIONS"
+                    Access-Control-Allow-Headers:
+                      schema:
+                        type: string
+                      default: "*"
+                  content:
+                    application/json:
+                      schema:
+                        type: object
             put:
               x-amazon-apigateway-integration:
                 httpMethod: POST
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaUsers.Arn}/invocations
-              responses: {}
+              responses:
+                "200":
+                  description: Successful response
+                  headers:
+                    Access-Control-Allow-Origin:
+                      schema:
+                        type: string
+                      default: "*"
+                    Access-Control-Allow-Methods:
+                      schema:
+                        type: string
+                      default: "GET, POST, PUT, DELETE, OPTIONS"
+                    Access-Control-Allow-Headers:
+                      schema:
+                        type: string
+                      default: "*"
+                  content:
+                    application/json:
+                      schema:
+                        type: object
+
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
   lambdaUsers:
