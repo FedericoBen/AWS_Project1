@@ -18,10 +18,10 @@ Resources:
         - ResourceName: apiProject1
       StageName: !Sub ${AppEnv}
       Cors:
-        AllowMethods: "'POST, GET'"
+        AllowMethods: "'PUT, GET'"
         AllowOrigin: "'http://localhost:5173'"
-        MaxAge: "'600'"
-        AllowCredentials: true
+        # MaxAge: "'600'"
+        # AllowCredentials: true
       DefinitionBody:
         openapi: '3.0'
         info: {}
