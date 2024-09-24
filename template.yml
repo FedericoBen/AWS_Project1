@@ -21,6 +21,7 @@ Resources:
         AllowMethods: "'PUT'"
         AllowOrigin: "'http://localhost:5173'"
         MaxAge: "'600'"
+        AllowCredentials: true
       DefinitionBody:
         openapi: '3.0'
         info: {}
