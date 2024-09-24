@@ -30,17 +30,28 @@ Resources:
         paths:
           /users:
             options:
-              x-amazon-apigateway-integration:
-                type: mock
-                requestTemplates:
-                  application/json: '{ "statusCode": 200 }'
-                responses:
-                  default:
-                    statusCode: 200
-                    responseParameters:
-                      method.response.header.Access-Control-Allow-Headers: "'*'"
-                      method.response.header.Access-Control-Allow-Methods: "'GET, POST, PUT, DELETE, OPTIONS'"
-                      method.response.header.Access-Control-Allow-Origin: "'*'"
+              summary: "CORS support"
+              produces:
+                - application/json
+              responses:
+                200:
+                  description: "Successful response"
+                  headers:
+                    Access-Control-Allow-Headers:
+                      type: string
+                      description: "CORS header"
+                      enum:
+                        - "'*'"
+                    Access-Control-Allow-Methods:
+                      type: string
+                      description: "CORS methods"
+                      enum:
+                        - "'GET, POST, PUT, DELETE, OPTIONS'"
+                    Access-Control-Allow-Origin:
+                      type: string
+                      description: "CORS origin"
+                      enum:
+                        - "'*'"
             get:
               x-amazon-apigateway-integration:
                 httpMethod: POST
