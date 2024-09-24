@@ -52,6 +52,10 @@ Resources:
                       description: "CORS origin"
                       enum:
                         - "'*'"
+              x-amazon-apigateway-integration:
+                type: mock
+                requestTemplates:
+                  application/json: '{ "statusCode": 200 }'
             get:
               x-amazon-apigateway-integration:
                 httpMethod: POST
