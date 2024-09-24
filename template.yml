@@ -34,7 +34,7 @@ Resources:
               produces:
                 - application/json
               responses:
-                200:
+                "200":  # Asegúrate de que la clave sea una cadena
                   description: "Successful response"
                   headers:
                     Access-Control-Allow-Headers:
