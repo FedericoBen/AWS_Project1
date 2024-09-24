@@ -17,6 +17,11 @@ Resources:
         - ${ResourceName} ${AppEnv} From Stack ${AWS::StackName}
         - ResourceName: apiProject1
       StageName: !Sub ${AppEnv}
+      Cors:
+        AllowMethods: "'PUT'"
+        AllowHeaders: "'X-Forwarded-For'"
+        AllowOrigin: "'http://localhost:5173'"
+        MaxAge: "'600'"
       DefinitionBody:
         openapi: '3.0'
         info: {}
@@ -43,10 +48,6 @@ Resources:
       Description: !Sub
         - Stack ${AWS::StackName} Function ${ResourceName} ${AppEnv}
         - ResourceName: lambdaUsers
-      # CodeUri: !Sub s3://${LambdaCodeBucket}/index.zip
-      # CodeUri:
-      #   Bucket: !Ref LambdaCodeBucket
-      #   Key: index.zip
       InlineCode: |
         // Este es un archivo JavaScript de ejemplo
         exports.handler = async (event) => {
