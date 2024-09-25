@@ -22,7 +22,7 @@ Resources:
         AllowMethods: "PUT, GET"
         AllowHeaders: "Content-Type, Authorization"
         AllowOrigin: "http://localhost:5173"
-        MaxAge: "'600'"
+        MaxAge: "600"
         AllowCredentials: true
       DefinitionBody:
         openapi: "3.0"
@@ -44,19 +44,19 @@ Resources:
                     Access-Control-Allow-Headers:
                       type: string
                       description: "CORS header"
-                      default: "'Content-Type, Authorization'"
+                      default: "Content-Type, Authorization"
                     Access-Control-Allow-Methods:
                       type: string
                       description: "CORS methods"
-                      default: "'GET, POST, OPTIONS'"
+                      default: "GET, POST, OPTIONS"
                     Access-Control-Allow-Origin:
                       type: string
                       description: "CORS origin"
-                      default: "'http://localhost:5173'"  # O el dominio de producción
+                      default: "http://localhost:5173"
                     Access-Control-Allow-Credentials:
                       type: string
                       description: "Indicates whether credentials are allowed"
-                      default: "'true'"
+                      default: "true"
             get:
               x-amazon-apigateway-integration:
                 httpMethod: POST
@@ -68,16 +68,16 @@ Resources:
                   headers:
                     Access-Control-Allow-Origin:
                       type: string
-                      default: "'http://localhost:5173'"  # O el dominio de producción
+                      default: "http://localhost:5173"
                     Access-Control-Allow-Methods:
                       type: string
-                      default: "'GET, POST, OPTIONS'"
+                      default: "GET, POST, OPTIONS"
                     Access-Control-Allow-Headers:
                       type: string
-                      default: "'Content-Type, Authorization'"
+                      default: "Content-Type, Authorization"
                     Access-Control-Allow-Credentials:
                       type: string
-                      default: "'true'"
+                      default: "true"
                   content:
                     application/json:
                       schema:
@@ -94,15 +94,15 @@ Resources:
                     Access-Control-Allow-Origin:
                       schema:
                         type: string
-                      default: "'*'"
+                      default: "*"
                     Access-Control-Allow-Methods:
                       schema:
                         type: string
-                      default: "'GET, POST, PUT, DELETE, OPTIONS'"
+                      default: "GET, POST, PUT, DELETE, OPTIONS"
                     Access-Control-Allow-Headers:
                       schema:
                         type: string
-                      default: "'*'"
+                      default: "*"
                   content:
                     application/json:
                       schema:
