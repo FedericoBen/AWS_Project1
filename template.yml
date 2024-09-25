@@ -21,43 +21,13 @@ Resources:
       Cors:
         AllowMethods: "'PUT, GET, OPTIONS'"
         AllowHeaders: "'Content-Type, Authorization'"
-        AllowOrigin: "'*'"
-        # AllowOrigin: "http://localhost:5173"
-        # MaxAge: "600"
-        # AllowCredentials: true
+        AllowOrigin: "http://localhost:5273"
+        # AllowOrigin: "'*'"
       DefinitionBody:
         openapi: "3.0"
         info: {}
         paths:
           /users:
-            # options:
-            #   x-amazon-apigateway-integration:
-            #     type: mock
-            #     requestTemplates:
-            #       application/json: '{ "statusCode": 200 }'
-            #   summary: "CORS support"
-            #   produces:
-            #     - application/json
-            #   responses:
-            #     "200":
-            #       description: "Successful response"
-            #       headers:
-            #         Access-Control-Allow-Headers:
-            #           type: string
-            #           description: "CORS header"
-            #           default: "Content-Type, Authorization"
-            #         Access-Control-Allow-Methods:
-            #           type: string
-            #           description: "CORS methods"
-            #           default: "GET, PUT, OPTIONS"
-            #         Access-Control-Allow-Origin:
-            #           type: string
-            #           description: "CORS origin"
-            #           default: "http://localhost:5173"
-            #         Access-Control-Allow-Credentials:
-            #           type: string
-            #           description: "Indicates whether credentials are allowed"
-            #           default: "true"
             get:
               x-amazon-apigateway-integration:
                 httpMethod: POST
@@ -70,16 +40,6 @@ Resources:
                     Access-Control-Allow-Origin:
                       type: string
                       default: "'*'"
-                      # default: "http://localhost:5173"
-                    # Access-Control-Allow-Methods:
-                    #   type: string
-                    #   default: "GET, PUT, OPTIONS"
-                    # Access-Control-Allow-Headers:
-                    #   type: string
-                    #   default: "Content-Type, Authorization"
-                    # Access-Control-Allow-Credentials:
-                    #   type: string
-                    #   default: "true"
                   content:
                     application/json:
                       schema:
@@ -96,16 +56,6 @@ Resources:
                     Access-Control-Allow-Origin:
                       type: string
                       default: "'*'"
-                      # default: "http://localhost:5173"
-                    # Access-Control-Allow-Methods:
-                    #   type: string
-                    #   default: "GET, PUT, OPTIONS"
-                    # Access-Control-Allow-Headers:
-                    #   type: string
-                    #   default: "Content-Type, Authorization"
-                    # Access-Control-Allow-Credentials:
-                    #   type: string
-                    #   default: "true"
                   content:
                     application/json:
                       schema:
