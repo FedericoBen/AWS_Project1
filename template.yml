@@ -19,9 +19,9 @@ Resources:
         - ResourceName: apiProject1
       StageName: !Sub ${AppEnv}
       Cors:
-        AllowMethods: "'PUT, GET'"
-        AllowHeaders: "'Content-Type, Authorization'"
-        AllowOrigin: "'http://localhost:5173'"
+        AllowMethods: "PUT, GET"
+        AllowHeaders: "Content-Type, Authorization"
+        AllowOrigin: "http://localhost:5173"
         MaxAge: "'600'"
         AllowCredentials: true
       DefinitionBody:
