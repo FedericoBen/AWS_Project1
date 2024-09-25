@@ -48,7 +48,7 @@ Resources:
                     Access-Control-Allow-Methods:
                       type: string
                       description: "CORS methods"
-                      default: "GET, POST, OPTIONS"
+                      default: "GET, PUT, OPTIONS"
                     Access-Control-Allow-Origin:
                       type: string
                       description: "CORS origin"
@@ -71,7 +71,7 @@ Resources:
                       default: "http://localhost:5173"
                     Access-Control-Allow-Methods:
                       type: string
-                      default: "GET, POST, OPTIONS"
+                      default: "GET, PUT, OPTIONS"
                     Access-Control-Allow-Headers:
                       type: string
                       default: "Content-Type, Authorization"
@@ -92,17 +92,17 @@ Resources:
                   description: Successful response
                   headers:
                     Access-Control-Allow-Origin:
-                      schema:
-                        type: string
-                      default: "*"
+                      type: string
+                      default: "http://localhost:5173"
                     Access-Control-Allow-Methods:
-                      schema:
-                        type: string
-                      default: "GET, POST, PUT, DELETE, OPTIONS"
+                      type: string
+                      default: "GET, PUT, OPTIONS"
                     Access-Control-Allow-Headers:
-                      schema:
-                        type: string
-                      default: "*"
+                      type: string
+                      default: "Content-Type, Authorization"
+                    Access-Control-Allow-Credentials:
+                      type: string
+                      default: "true"
                   content:
                     application/json:
                       schema:
