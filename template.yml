@@ -20,7 +20,7 @@ Resources:
       StageName: !Sub ${AppEnv}
       Cors:
         AllowMethods: "'PUT, GET'"
-        AllowHeaders: "'Content-Type'"
+        AllowHeaders: "'Content-Type, Authorization'"
         AllowOrigin: "'http://localhost:5173'"
         MaxAge: "'600'"
         AllowCredentials: true
