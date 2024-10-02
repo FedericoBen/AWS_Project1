@@ -150,4 +150,7 @@ Resources:
             Principal: "*"
             Resource:
               - !GetAtt LambdaCodeBucket.Arn
-              - !GetAtt LambdaCodeBucket.Arn/*
+              - !Join
+                  - ""
+                  - - !GetAtt LambdaCodeBucket.Arn
+                    - /*
