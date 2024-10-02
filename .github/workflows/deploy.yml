@@ -51,12 +51,6 @@ jobs:
           role-duration-seconds: 3600
           role-skip-session-tagging: true
 
-      # Step 4: Package Lambda code into a zip file
-      # - name: STEP4-Package Lambda
-      #   run: |
-      #     touch placeholder.txt
-      #     zip -r lambdaUsers.zip placeholder.txt
-
       # Step 5: Deploy SAM stack
       - name: STEP5-Deploy SAM Application
         run: |
