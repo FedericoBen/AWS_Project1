@@ -143,8 +143,8 @@ Resources:
             Principal: "*"
             Action: s3:PutObject
             Resource:
-              - !ref ${LambdaCodeBucket}
-              - !ref ${LambdaCodeBucket}/*
+              - !Ref ${LambdaCodeBucket}
+              - !Ref ${LambdaCodeBucket}/*
             Condition:
               StringNotEquals:
                 s3:x-amz-server-side-encryption: aws:kms
