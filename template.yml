@@ -124,7 +124,7 @@ Resources:
   LambdaCodeBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub ${AWS::StackName}-lambda-code-${AWS::AccountId}
+      BucketName: !Sub ${AWS::StackName}-lambda-code-S3-${AWS::AccountId}
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
