@@ -129,6 +129,11 @@ Resources:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: aws:kms
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: false
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
 
   # Política del Bucket S3 para la Lambda
   LambdaCodeBucketPolicyAhoraEsPersonal:
