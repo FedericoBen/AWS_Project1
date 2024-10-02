@@ -131,16 +131,23 @@ Resources:
               SSEAlgorithm: aws:kms
 
   # Política del Bucket S3 para la Lambda
-  LambdaCodeBucketPolicy:
+  LambdaCodeBucketPolicyAhoraEsPersonal:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref LambdaCodeBucket
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-          - Sid: AllowPutObject
+          - Action:
+              - s3:GetObject
+              - s3:List*
+              - s3:*Object
+              - s3:PutObject
+              - s3:GetBucketLocation
+              - s3:GetObjectVersion
+              - s3:PutObjectTagging
             Effect: Allow
             Principal: "*"
-            Action: s3:PutObject
             Resource:
-              - !Ref LambdaCodeBucket
+              - !GetAtt LambdaCodeBucket.Arn
+              - !GetAtt LambdaCodeBucket.Arn/*
